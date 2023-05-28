@@ -57,7 +57,7 @@ jobs:
 
   edge-commit-f38:
     needs: [pr-info, pre-edge-commit-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, large]
+    runs-on: [kite, x86_64, gcp, fedora-38, medium]
     timeout-minutes: 90
     env:
       STATUS_NAME: Tests / edge-commit-f38
@@ -158,7 +158,7 @@ jobs:
 
   edge-installer-f38:
     needs: [pr-info, pre-edge-installer-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, large]
+    runs-on: [kite, x86_64, gcp, fedora-38, medium]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-installer-f38
@@ -262,7 +262,7 @@ jobs:
 
   edge-raw-f38:
     needs: [pr-info, pre-edge-raw-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, large]
+    runs-on: [kite, x86_64, gcp, fedora-38, medium]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-raw-f38
@@ -365,7 +365,7 @@ jobs:
 
   edge-minimal-raw-f38:
     needs: [pr-info, pre-edge-minimal-raw-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, large]
+    runs-on: [kite, x86_64, gcp, fedora-38, medium]
     timeout-minutes: 100
     env:
       STATUS_NAME: Tests / edge-minimal-raw-f38

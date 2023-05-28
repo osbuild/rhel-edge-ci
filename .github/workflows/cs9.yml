@@ -56,7 +56,7 @@ jobs:
 
   edge-commit-cs9:
     needs: [pr-info, pre-edge-commit-cs9]
-    runs-on: [kite, x86_64, gcp, centos-stream-9, large]
+    runs-on: [kite, x86_64, gcp, centos-stream-9, medium]
     timeout-minutes: 90
     env:
       STATUS_NAME: Tests / edge-commit-cs9
@@ -157,7 +157,7 @@ jobs:
 
   edge-installer-cs9:
     needs: [pr-info, pre-edge-installer-cs9]
-    runs-on: [kite, x86_64, gcp, centos-stream-9, large]
+    runs-on: [kite, x86_64, gcp, centos-stream-9, medium]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-installer-cs9
@@ -261,7 +261,7 @@ jobs:
 
   edge-raw-cs9:
     needs: [pr-info, pre-edge-raw-cs9]
-    runs-on: [kite, x86_64, gcp, centos-stream-9, large]
+    runs-on: [kite, x86_64, gcp, centos-stream-9, medium]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-raw-cs9
@@ -364,7 +364,7 @@ jobs:
 
   edge-simplified-cs9:
     needs: [pr-info, pre-edge-simplified-cs9]
-    runs-on: [kite, x86_64, gcp, centos-stream-9, large]
+    runs-on: [kite, x86_64, gcp, centos-stream-9, medium]
     timeout-minutes: 160
     env:
       STATUS_NAME: Tests / edge-simplified-cs9
@@ -467,7 +467,7 @@ jobs:
 
   edge-rebase-cs9:
     needs: [pr-info, pre-edge-rebase-cs9]
-    runs-on: [kite, x86_64, gcp, centos-stream-9, large]
+    runs-on: [kite, x86_64, gcp, centos-stream-9, medium]
     timeout-minutes: 100
     env:
       STATUS_NAME: Tests / edge-rebase-cs9

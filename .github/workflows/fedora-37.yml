@@ -57,7 +57,7 @@ jobs:
 
   edge-commit-f37:
     needs: [pr-info, pre-edge-commit-f37]
-    runs-on: [kite, x86_64, gcp, fedora-37, large]
+    runs-on: [kite, x86_64, gcp, fedora-37, medium]
     timeout-minutes: 90
     env:
       STATUS_NAME: Tests / edge-commit-f37
@@ -158,7 +158,7 @@ jobs:
 
   edge-installer-f37:
     needs: [pr-info, pre-edge-installer-f37]
-    runs-on: [kite, x86_64, gcp, fedora-37, large]
+    runs-on: [kite, x86_64, gcp, fedora-37, medium]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-installer-f37
@@ -262,7 +262,7 @@ jobs:
 
   edge-raw-f37:
     needs: [pr-info, pre-edge-raw-f37]
-    runs-on: [kite, x86_64, gcp, fedora-37, large]
+    runs-on: [kite, x86_64, gcp, fedora-37, medium]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-raw-f37
@@ -365,7 +365,7 @@ jobs:
 
   edge-minimal-raw-f37:
     needs: [pr-info, pre-edge-minimal-raw-f37]
-    runs-on: [kite, x86_64, gcp, fedora-37, large]
+    runs-on: [kite, x86_64, gcp, fedora-37, medium]
     timeout-minutes: 100
     env:
       STATUS_NAME: Tests / edge-minimal-raw-f37
