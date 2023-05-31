@@ -57,7 +57,7 @@ jobs:
 
   edge-commit-92:
     needs: [pr-info, pre-edge-commit-92]
-    runs-on: [kite, x86_64, rhos-01, rhel-9-2, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-2, large]
     timeout-minutes: 90
     env:
       STATUS_NAME: Tests / edge-commit-9.2
@@ -158,7 +158,7 @@ jobs:
 
   edge-installer-92:
     needs: [pr-info, pre-edge-installer-92]
-    runs-on: [kite, x86_64, rhos-01, rhel-9-2, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-2, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-installer-9.2
@@ -262,7 +262,7 @@ jobs:
 
   edge-raw-92:
     needs: [pr-info, pre-edge-raw-92]
-    runs-on: [kite, x86_64, rhos-01, rhel-9-2, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-2, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-raw-9.2
@@ -365,7 +365,7 @@ jobs:
 
   edge-simplified-92:
     needs: [pr-info, pre-edge-simplified-92]
-    runs-on: [kite, x86_64, rhos-01, rhel-9-2, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-2, large]
     timeout-minutes: 160
     env:
       STATUS_NAME: Tests / edge-simplified-9.2
@@ -468,7 +468,7 @@ jobs:
 
   edge-rebase-92:
     needs: [pr-info, pre-edge-rebase-92]
-    runs-on: [kite, x86_64, rhos-01, rhel-9-2, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-2, large]
     timeout-minutes: 100
     env:
       STATUS_NAME: Tests / edge-rebase-9.2

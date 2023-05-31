@@ -57,7 +57,7 @@ jobs:
 
   edge-commit-88:
     needs: [pr-info, pre-edge-commit-88]
-    runs-on: [kite, x86_64, rhos-01, rhel-8-8, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 90
     env:
       STATUS_NAME: Tests / edge-commit-8.8
@@ -158,7 +158,7 @@ jobs:
 
   edge-installer-88:
     needs: [pr-info, pre-edge-installer-88]
-    runs-on: [kite, x86_64, rhos-01, rhel-8-8, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-installer-8.8
@@ -262,7 +262,7 @@ jobs:
 
   edge-raw-88:
     needs: [pr-info, pre-edge-raw-88]
-    runs-on: [kite, x86_64, rhos-01, rhel-8-8, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-raw-8.8
@@ -365,7 +365,7 @@ jobs:
 
   edge-simplified-88:
     needs: [pr-info, pre-edge-simplified-88]
-    runs-on: [kite, x86_64, rhos-01, rhel-8-8, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 160
     env:
       STATUS_NAME: Tests / edge-simplified-8.8
@@ -468,7 +468,7 @@ jobs:
 
   edge-rebase-88:
     needs: [pr-info, pre-edge-rebase-88]
-    runs-on: [kite, x86_64, rhos-01, rhel-8-8, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 100
     env:
       STATUS_NAME: Tests / edge-rebase-8.8
