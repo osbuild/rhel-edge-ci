@@ -2,9 +2,11 @@
 name: RHEL for Edge test on Fedora 38
 
 on:
-  # Triggered by osbuild-composer CI from gitlab
-  repository_dispatch:
-    types: [osbuild-composer-ci]
+  workflow_dispatch:
+  # Do not run test on Fedora 38 due to rpmkeys signature verification issue
+  # # Triggered by osbuild-composer CI from gitlab
+  # repository_dispatch:
+  #   types: [osbuild-composer-ci]
 
 jobs:
   pr-info:
