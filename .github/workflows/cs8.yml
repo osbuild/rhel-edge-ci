@@ -49,7 +49,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'CentOS Stream 8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -77,7 +77,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'CentOS Stream 8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -106,6 +106,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'CentOS Stream 8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -117,6 +118,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'CentOS Stream 8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -150,7 +152,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'CentOS Stream 8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -178,7 +180,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'CentOS Stream 8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -210,6 +212,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'CentOS Stream 8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -221,6 +224,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'CentOS Stream 8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -254,7 +258,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'CentOS Stream 8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -282,7 +286,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'CentOS Stream 8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -313,6 +317,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'CentOS Stream 8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -324,6 +329,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'CentOS Stream 8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -357,7 +363,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'CentOS Stream 8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -385,7 +391,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'CentOS Stream 8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -416,6 +422,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'CentOS Stream 8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -427,6 +434,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'CentOS Stream 8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -460,7 +468,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'CentOS Stream 8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -488,7 +496,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'CentOS Stream 8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -517,6 +525,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'CentOS Stream 8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -528,6 +537,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'CentOS Stream 8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}

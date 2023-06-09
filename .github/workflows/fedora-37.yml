@@ -50,7 +50,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'Fedora 37 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -78,7 +78,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'Fedora 37 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -107,6 +107,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'Fedora 37 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -118,6 +119,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'Fedora 37 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -151,7 +153,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'Fedora 37 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -179,7 +181,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'Fedora 37 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -211,6 +213,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'Fedora 37 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -222,6 +225,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'Fedora 37 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -255,7 +259,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'Fedora 37 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -283,7 +287,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'Fedora 37 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -314,6 +318,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'Fedora 37 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -325,6 +330,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'Fedora 37 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -358,7 +364,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'Fedora 37 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -386,7 +392,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'Fedora 37 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -415,6 +421,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'Fedora 37 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -426,6 +433,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'Fedora 37 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}

@@ -29,17 +29,17 @@ jobs:
       sender_repo: ${{ fromJson(steps.pr-api.outputs.data).head.repo.full_name }}
       sender_branch: ${{ fromJson(steps.pr-api.outputs.data).head.ref }}
 
-  pre-edge-commit-88:
+  pre-edge-commit-8:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-commit-8.8
+      STATUS_NAME: Tests / edge-commit-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-commit-88" '.jobs | map(select(.name == "pre-edge-commit-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-commit-8" '.jobs | map(select(.name == "pre-edge-commit-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -50,24 +50,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'RHEL 8.8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-commit-88:
-    needs: [pr-info, pre-edge-commit-88]
+  edge-commit-8:
+    needs: [pr-info, pre-edge-commit-8]
     runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 90
     env:
-      STATUS_NAME: Tests / edge-commit-8.8
+      STATUS_NAME: Tests / edge-commit-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-commit-88" '.jobs | map(select(.name == "edge-commit-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-commit-8" '.jobs | map(select(.name == "edge-commit-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,7 +78,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'RHEL 8.8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -107,6 +107,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'RHEL 8.8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -118,6 +119,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'RHEL 8.8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -125,22 +127,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-commit-8.8
+          name: edge-commit-8
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-installer-88:
+  pre-edge-installer-8:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-installer-8.8
+      STATUS_NAME: Tests / edge-installer-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-installer-88" '.jobs | map(select(.name == "pre-edge-installer-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-installer-8" '.jobs | map(select(.name == "pre-edge-installer-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -151,24 +153,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'RHEL 8.8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-installer-88:
-    needs: [pr-info, pre-edge-installer-88]
+  edge-installer-8:
+    needs: [pr-info, pre-edge-installer-8]
     runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 130
     env:
-      STATUS_NAME: Tests / edge-installer-8.8
+      STATUS_NAME: Tests / edge-installer-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-installer-88" '.jobs | map(select(.name == "edge-installer-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-installer-8" '.jobs | map(select(.name == "edge-installer-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -179,7 +181,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'RHEL 8.8 -  Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -211,6 +213,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'RHEL 8.8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -222,6 +225,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'RHEL 8.8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -229,22 +233,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-installer-8.8
+          name: edge-installer-8
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-raw-88:
+  pre-edge-raw-8:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-raw-8.8
+      STATUS_NAME: Tests / edge-raw-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-raw-88" '.jobs | map(select(.name == "pre-edge-raw-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-raw-8" '.jobs | map(select(.name == "pre-edge-raw-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -255,24 +259,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'RHEL 8.8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-raw-88:
-    needs: [pr-info, pre-edge-raw-88]
+  edge-raw-8:
+    needs: [pr-info, pre-edge-raw-8]
     runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 130
     env:
-      STATUS_NAME: Tests / edge-raw-8.8
+      STATUS_NAME: Tests / edge-raw-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-raw-88" '.jobs | map(select(.name == "edge-raw-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-raw-8" '.jobs | map(select(.name == "edge-raw-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -283,7 +287,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'RHEL 8.8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -314,6 +318,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'RHEL 8.8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -325,6 +330,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'RHEL 8.8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -332,22 +338,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-raw-8.8
+          name: edge-raw-8
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-simplified-88:
+  pre-edge-simplified-8:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-simplified-8.8
+      STATUS_NAME: Tests / edge-simplified-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-simplified-88" '.jobs | map(select(.name == "pre-edge-simplified-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-simplified-8" '.jobs | map(select(.name == "pre-edge-simplified-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -358,24 +364,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'RHEL 8.8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-simplified-88:
-    needs: [pr-info, pre-edge-simplified-88]
+  edge-simplified-8:
+    needs: [pr-info, pre-edge-simplified-8]
     runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 160
     env:
-      STATUS_NAME: Tests / edge-simplified-8.8
+      STATUS_NAME: Tests / edge-simplified-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-simplified-88" '.jobs | map(select(.name == "edge-simplified-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-simplified-8" '.jobs | map(select(.name == "edge-simplified-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -386,7 +392,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'RHEL 8.8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -417,6 +423,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'RHEL 8.8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -428,6 +435,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'RHEL 8.8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -435,22 +443,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-simplified-8.8
+          name: edge-simplified-8
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-rebase-88:
+  pre-edge-rebase-8:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-rebase-8.8
+      STATUS_NAME: Tests / edge-rebase-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-rebase-88" '.jobs | map(select(.name == "pre-edge-rebase-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-rebase-8" '.jobs | map(select(.name == "pre-edge-rebase-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -461,24 +469,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Runner has been deploying...'
+          description: 'RHEL 8.8 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-rebase-88:
-    needs: [pr-info, pre-edge-rebase-88]
+  edge-rebase-8:
+    needs: [pr-info, pre-edge-rebase-8]
     runs-on: [kite, x86_64, rhos-0x, rhel-8-8, large]
     timeout-minutes: 100
     env:
-      STATUS_NAME: Tests / edge-rebase-8.8
+      STATUS_NAME: Tests / edge-rebase-8
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-rebase-88" '.jobs | map(select(.name == "edge-rebase-88")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-rebase-8" '.jobs | map(select(.name == "edge-rebase-8")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -489,7 +497,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Test has been running...'
+          description: 'RHEL 8.8 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -518,6 +526,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
+          description: 'RHEL 8.8 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -529,6 +538,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
+          description: 'RHEL 8.8 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -536,7 +546,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-rebase-8.8
+          name: edge-rebase-8
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
