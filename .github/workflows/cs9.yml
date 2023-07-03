@@ -549,3 +549,111 @@ jobs:
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
+
+  pre-edge-ami-cs9:
+    needs: pr-info
+    runs-on: ubuntu-latest
+    env:
+      STATUS_NAME: Tests / edge-raw-cs9
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-ami-cs9" '.jobs | map(select(.name == "pre-edge-ami-cs9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'CentOS Stream 9 - Runner has been deploying...'
+          target_url: '${{ steps.job-log-url.outputs.html_url }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+  edge-ami-cs9:
+    needs: [pr-info, pre-edge-ami-cs9]
+    runs-on: [kite, x86_64, gcp, centos-stream-9, medium]
+    timeout-minutes: 130
+    env:
+      STATUS_NAME: Tests / edge-ami-cs9
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          sudo dnf install -y jq
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-ami-cs9" '.jobs | map(select(.name == "edge-ami-cs9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'CentOS Stream 9 - Test has been running...'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ needs.pr-info.outputs.sender_repo }}
+          ref: ${{ needs.pr-info.outputs.sender_branch }}
+          fetch-depth: 0
+
+      - name: Make a deployment
+        run: schutzbot/deploy.sh
+        env:
+          GIT_COMMIT: ${{ needs.pr-info.outputs.sha }}
+        timeout-minutes: 20
+
+      - name: run ostree-ami-image.sh
+        run: /usr/libexec/tests/osbuild-composer/ostree-ami-image.sh
+        env:
+          EDGE_USER_PASSWORD: foobar
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-3
+        timeout-minutes: 90
+
+      - name: Set non cancelled result status
+        if: ${{ !cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: ${{ job.status }}
+          description: 'CentOS Stream 9 - Test got ${{ job.status }}'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Set cancelled result status
+        if: ${{ cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: error
+          description: 'CentOS Stream 9 - Test got error'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: edge-ami-cs9
+          path: |
+            /tmp/artifacts/*.json
+            /tmp/artifacts/*.log
