@@ -554,7 +554,7 @@ jobs:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-raw-cs9
+      STATUS_NAME: Tests / edge-ami-cs9
 
     steps:
       - name: Get Current Job Log URL
