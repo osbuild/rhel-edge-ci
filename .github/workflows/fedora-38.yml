@@ -160,7 +160,7 @@ jobs:
 
   edge-installer-f38:
     needs: [pr-info, pre-edge-installer-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, medium]
+    runs-on: [kite, x86_64, rhos-0x, fedora-38, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-installer-f38
