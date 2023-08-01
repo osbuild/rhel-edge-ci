@@ -792,7 +792,7 @@ jobs:
   edge-vsphere-cs9:
     needs: [pr-info, pre-edge-vsphere-cs9]
     runs-on: [kite, x86_64, rhos-0x, centos-stream-9, medium]
-    timeout-minutes: 100
+    timeout-minutes: 150
     env:
       STATUS_NAME: Tests / edge-vsphere-cs9
 
