@@ -98,7 +98,8 @@ jobs:
 
       - name: run ostree.sh
         run: /usr/libexec/tests/osbuild-composer/ostree.sh
-        timeout-minutes: 40
+        # add more time due to bug https://github.com/pulp/pulp_ostree/issues/289
+        timeout-minutes: 120
 
       - name: Set non cancelled result status
         if: ${{ !cancelled() }}
