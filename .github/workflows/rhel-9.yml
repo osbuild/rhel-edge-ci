@@ -905,7 +905,7 @@ jobs:
   edge-pulp-9:
     needs: [pr-info, pre-edge-pulp-9]
     if: ${{ needs.pr-info.outputs.pr_number == '3605' }}
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, medium]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
     timeout-minutes: 180
     env:
       STATUS_NAME: Tests / edge-pulp-9
