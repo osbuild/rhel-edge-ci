@@ -28,7 +28,6 @@ jobs:
       sha: ${{ fromJson(steps.pr-api.outputs.data).head.sha }}
       sender_repo: ${{ fromJson(steps.pr-api.outputs.data).head.repo.full_name }}
       sender_branch: ${{ fromJson(steps.pr-api.outputs.data).head.ref }}
-      pr_number: ${{ steps.pr-num.outputs.pr_number }}
 
   pre-edge-commit-9:
     needs: pr-info
@@ -877,7 +876,6 @@ jobs:
 
   pre-edge-pulp-9:
     needs: pr-info
-    if: ${{ needs.pr-info.outputs.pr_number == '3605' }}
     runs-on: ubuntu-latest
     env:
       STATUS_NAME: Tests / edge-pulp-9
@@ -904,7 +902,6 @@ jobs:
 
   edge-pulp-9:
     needs: [pr-info, pre-edge-pulp-9]
-    if: ${{ needs.pr-info.outputs.pr_number == '3605' }}
     runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
     timeout-minutes: 180
     env:
