@@ -50,14 +50,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-commit-9:
     needs: [pr-info, pre-edge-commit-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 90
     env:
       STATUS_NAME: Tests / edge-commit-9
@@ -78,7 +78,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -108,7 +108,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -120,7 +120,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -154,14 +154,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-installer-9:
     needs: [pr-info, pre-edge-installer-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-installer-9
@@ -182,7 +182,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -214,7 +214,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -226,7 +226,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -260,14 +260,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-raw-9:
     needs: [pr-info, pre-edge-raw-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-raw-9
@@ -288,7 +288,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -319,7 +319,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -331,7 +331,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -365,14 +365,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-simplified-9:
     needs: [pr-info, pre-edge-simplified-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 160
     env:
       STATUS_NAME: Tests / edge-simplified-9
@@ -393,7 +393,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -424,7 +424,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -436,7 +436,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -470,14 +470,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-ignition-9:
     needs: [pr-info, pre-edge-ignition-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 160
     env:
       STATUS_NAME: Tests / edge-ignition-9
@@ -498,7 +498,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -527,7 +527,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -539,7 +539,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -573,14 +573,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-ami-9:
     needs: [pr-info, pre-edge-ami-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 130
     env:
       STATUS_NAME: Tests / edge-ami-9
@@ -601,7 +601,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -635,7 +635,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -647,7 +647,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -681,14 +681,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-minimal-raw-9:
     needs: [pr-info, pre-edge-minimal-raw-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 100
     env:
       STATUS_NAME: Tests / edge-minimal-raw-9
@@ -709,7 +709,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -740,7 +740,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -752,7 +752,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -786,14 +786,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-vsphere-9:
     needs: [pr-info, pre-edge-vsphere-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, medium]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, medium]
     timeout-minutes: 180
     env:
       STATUS_NAME: Tests / edge-vsphere-9
@@ -814,7 +814,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -849,7 +849,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -861,7 +861,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -895,14 +895,14 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Runner has been deploying...'
+          description: 'RHEL 9.4 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-pulp-9:
     needs: [pr-info, pre-edge-pulp-9]
-    runs-on: [kite, x86_64, rhos-0x, rhel-9-3, large]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 180
     env:
       STATUS_NAME: Tests / edge-pulp-9
@@ -923,7 +923,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'RHEL 9.3 - Test has been running...'
+          description: 'RHEL 9.4 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -958,7 +958,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'RHEL 9.3 - Test got ${{ job.status }}'
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -970,7 +970,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'RHEL 9.3 - Test got error'
+          description: 'RHEL 9.4 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
