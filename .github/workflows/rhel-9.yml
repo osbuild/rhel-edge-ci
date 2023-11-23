@@ -239,6 +239,87 @@ jobs:
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
+  edge-installer-9-fips:
+    needs: [pr-info, pre-edge-installer-9]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
+    timeout-minutes: 130
+    env:
+      STATUS_NAME: Tests / edge-installer-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          sudo dnf install -y jq
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-installer-9" '.jobs | map(select(.name == "edge-installer-9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Test has been running...'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ needs.pr-info.outputs.sender_repo }}
+          ref: ${{ needs.pr-info.outputs.sender_branch }}
+          fetch-depth: 0
+
+      - name: Make a deployment
+        run: schutzbot/deploy.sh
+        env:
+          GIT_COMMIT: ${{ needs.pr-info.outputs.sha }}
+        timeout-minutes: 20
+
+      - name: run ostree-ng.sh
+        run: /usr/libexec/tests/osbuild-composer/ostree-ng.sh
+        env:
+          V2_QUAY_USERNAME: ${{ secrets.V2_QUAY_USERNAME }}
+          V2_QUAY_PASSWORD: ${{ secrets.V2_QUAY_PASSWORD }}
+          FIPS: true
+        timeout-minutes: 90
+
+      - name: Set non cancelled result status
+        if: ${{ !cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: ${{ job.status }}
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Set cancelled result status
+        if: ${{ cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: error
+          description: 'RHEL 9.4 - Test got error'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: edge-installer-9
+          path: |
+            /tmp/artifacts/*.json
+            /tmp/artifacts/*.log
+
   pre-edge-raw-9:
     needs: pr-info
     runs-on: ubuntu-latest
@@ -344,6 +425,78 @@ jobs:
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
+  edge-raw-9-fips:
+    needs: [pr-info, pre-edge-raw-9]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
+    timeout-minutes: 130
+    env:
+      STATUS_NAME: Tests / edge-raw-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          sudo dnf install -y jq
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-raw-9" '.jobs | map(select(.name == "edge-raw-9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Test has been running...'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ needs.pr-info.outputs.sender_repo }}
+          ref: ${{ needs.pr-info.outputs.sender_branch }}
+          fetch-depth: 0
+
+      - name: Make a deployment
+        run: schutzbot/deploy.sh
+        env:
+          GIT_COMMIT: ${{ needs.pr-info.outputs.sha }}
+        timeout-minutes: 20
+
+      - name: run ostree-raw-image.sh
+        run: /usr/libexec/tests/osbuild-composer/ostree-raw-image.sh
+        env:
+          EDGE_USER_PASSWORD: foobar
+          FIPS: true
+        timeout-minutes: 90
+
+      - name: Set non cancelled result status
+        if: ${{ !cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: ${{ job.status }}
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Set cancelled result status
+        if: ${{ cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: error
+          description: 'RHEL 9.4 - Test got error'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
   pre-edge-simplified-9:
     needs: pr-info
     runs-on: ubuntu-latest
@@ -415,6 +568,86 @@ jobs:
         run: /usr/libexec/tests/osbuild-composer/ostree-simplified-installer.sh
         env:
           EDGE_USER_PASSWORD: foobar
+        timeout-minutes: 150
+
+      - name: Set non cancelled result status
+        if: ${{ !cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: ${{ job.status }}
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Set cancelled result status
+        if: ${{ cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: error
+          description: 'RHEL 9.4 - Test got error'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: edge-simplified-9
+          path: |
+            /tmp/artifacts/*.json
+            /tmp/artifacts/*.log
+
+  edge-simplified-9-fips:
+    needs: [pr-info, pre-edge-simplified-9]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
+    timeout-minutes: 160
+    env:
+      STATUS_NAME: Tests / edge-simplified-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          sudo dnf install -y jq
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-simplified-9" '.jobs | map(select(.name == "edge-simplified-9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Test has been running...'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ needs.pr-info.outputs.sender_repo }}
+          ref: ${{ needs.pr-info.outputs.sender_branch }}
+          fetch-depth: 0
+
+      - name: Make a deployment
+        run: schutzbot/deploy.sh
+        env:
+          GIT_COMMIT: ${{ needs.pr-info.outputs.sha }}
+        timeout-minutes: 20
+
+      - name: run ostree-simplified-installer.sh
+        run: /usr/libexec/tests/osbuild-composer/ostree-simplified-installer.sh
+        env:
+          EDGE_USER_PASSWORD: foobar
+          FIPS: true
         timeout-minutes: 150
 
       - name: Set non cancelled result status
@@ -686,6 +919,90 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
+  edge-ami-9-fips:
+    needs: [pr-info, pre-edge-ami-9]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
+    timeout-minutes: 130
+    env:
+      STATUS_NAME: Tests / edge-ami-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          sudo dnf install -y jq
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-ami-9" '.jobs | map(select(.name == "edge-ami-9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Test has been running...'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ needs.pr-info.outputs.sender_repo }}
+          ref: ${{ needs.pr-info.outputs.sender_branch }}
+          fetch-depth: 0
+
+      - name: Make a deployment
+        run: schutzbot/deploy.sh
+        env:
+          GIT_COMMIT: ${{ needs.pr-info.outputs.sha }}
+        timeout-minutes: 20
+
+      - name: run ostree-ami-image.sh
+        run: /usr/libexec/tests/osbuild-composer/ostree-ami-image.sh
+        env:
+          EDGE_USER_PASSWORD: foobar
+          FIPS: true
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+        timeout-minutes: 90
+
+      - name: Set non cancelled result status
+        if: ${{ !cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: ${{ job.status }}
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Set cancelled result status
+        if: ${{ cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: error
+          description: 'RHEL 9.4 - Test got error'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: edge-ami-9
+          path: |
+            /tmp/artifacts/*.json
+            /tmp/artifacts/*.log
+
+
   edge-minimal-raw-9:
     needs: [pr-info, pre-edge-minimal-raw-9]
     runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
@@ -840,6 +1157,90 @@ jobs:
           GOVC_USERNAME: ${{ secrets.GOVC_USERNAME }}
           GOVC_PASSWORD: ${{ secrets.GOVC_PASSWORD }}
           GOVC_INSECURE: 1
+        timeout-minutes: 150
+
+      - name: Set non cancelled result status
+        if: ${{ !cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: ${{ job.status }}
+          description: 'RHEL 9.4 - Test got ${{ job.status }}'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Set cancelled result status
+        if: ${{ cancelled() }}
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: error
+          description: 'RHEL 9.4 - Test got error'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: edge-vsphere-9
+          path: |
+            /tmp/artifacts/*.json
+            /tmp/artifacts/*.log
+
+  edge-vsphere-9-fips:
+    needs: [pr-info, pre-edge-vsphere-9]
+    runs-on: [kite, x86_64, rhos-0x, rhel-9-4, medium]
+    timeout-minutes: 180
+    env:
+      STATUS_NAME: Tests / edge-vsphere-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          sudo dnf install -y jq
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-vsphere-9" '.jobs | map(select(.name == "edge-vsphere-9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Test has been running...'
+          target_url: ${{ steps.job-log-url.outputs.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ needs.pr-info.outputs.sender_repo }}
+          ref: ${{ needs.pr-info.outputs.sender_branch }}
+          fetch-depth: 0
+
+      - name: Make a deployment
+        run: schutzbot/deploy.sh
+        env:
+          GIT_COMMIT: ${{ needs.pr-info.outputs.sha }}
+        timeout-minutes: 20
+
+      - name: run ostree-vsphere.sh
+        run: /usr/libexec/tests/osbuild-composer/ostree-vsphere.sh
+        env:
+          DOWNLOAD_NODE: ${{ secrets.DOWNLOAD_NODE }}
+          GOVC_URL: ${{ secrets.GOVC_URL }}
+          GOVC_USERNAME: ${{ secrets.GOVC_USERNAME }}
+          GOVC_PASSWORD: ${{ secrets.GOVC_PASSWORD }}
+          GOVC_INSECURE: 1
+          FIPS: true
         timeout-minutes: 150
 
       - name: Set non cancelled result status
