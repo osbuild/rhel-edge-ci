@@ -341,7 +341,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-installer-9
+          name: edge-installer-9-fips
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
@@ -549,6 +549,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: edge-raw-9-fips
+          path: |
+            /tmp/artifacts/*.json
+            /tmp/artifacts/*.log
+
   pre-edge-simplified-9:
     needs: pr-info
     runs-on: ubuntu-latest
@@ -755,7 +763,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-simplified-9
+          name: edge-simplified-9-fips
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
@@ -1075,7 +1083,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-ami-9
+          name: edge-ami-9-fips
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
@@ -1399,7 +1407,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-vsphere-9
+          name: edge-vsphere-9-fips
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
