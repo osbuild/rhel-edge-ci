@@ -239,8 +239,34 @@ jobs:
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
+  pre-edge-installer-9-fips:
+    needs: pr-info
+    runs-on: ubuntu-latest
+    env:
+      STATUS_NAME: Tests / edge-installer-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-installer-9-fips" '.jobs | map(select(.name == "pre-edge-installer-9-fips")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Runner has been deploying...'
+          target_url: '${{ steps.job-log-url.outputs.html_url }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
   edge-installer-9-fips:
-    needs: [pr-info, pre-edge-installer-9]
+    needs: [pr-info, pre-edge-installer-9-fips]
     runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 130
     env:
@@ -251,7 +277,7 @@ jobs:
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-installer-9" '.jobs | map(select(.name == "edge-installer-9")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-installer-9-fips" '.jobs | map(select(.name == "edge-installer-9-fips")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -425,8 +451,34 @@ jobs:
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
+  pre-edge-raw-9-fips:
+    needs: pr-info
+    runs-on: ubuntu-latest
+    env:
+      STATUS_NAME: Tests / edge-raw-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-raw-9-fips" '.jobs | map(select(.name == "pre-edge-raw-9-fips")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Runner has been deploying...'
+          target_url: '${{ steps.job-log-url.outputs.html_url }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
   edge-raw-9-fips:
-    needs: [pr-info, pre-edge-raw-9]
+    needs: [pr-info, pre-edge-raw-9-fips]
     runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 130
     env:
@@ -437,7 +489,7 @@ jobs:
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-raw-9" '.jobs | map(select(.name == "edge-raw-9")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-raw-9-fips" '.jobs | map(select(.name == "edge-raw-9-fips")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -602,8 +654,34 @@ jobs:
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
+  pre-edge-simplified-9-fips:
+    needs: pr-info
+    runs-on: ubuntu-latest
+    env:
+      STATUS_NAME: Tests / edge-simplified-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-simplified-9-fips" '.jobs | map(select(.name == "pre-edge-simplified-9-fips")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Runner has been deploying...'
+          target_url: '${{ steps.job-log-url.outputs.html_url }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
   edge-simplified-9-fips:
-    needs: [pr-info, pre-edge-simplified-9]
+    needs: [pr-info, pre-edge-simplified-9-fips]
     runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 160
     env:
@@ -614,7 +692,7 @@ jobs:
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-simplified-9" '.jobs | map(select(.name == "edge-simplified-9")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-simplified-9-fips" '.jobs | map(select(.name == "edge-simplified-9-fips")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -893,17 +971,17 @@ jobs:
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-minimal-raw-9:
+  pre-edge-ami-9-fips:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-minimal-raw-9
+      STATUS_NAME: Tests / edge-ami-9-fips
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-minimal-raw-9" '.jobs | map(select(.name == "pre-edge-minimal-raw-9")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-ami-9-fips" '.jobs | map(select(.name == "pre-edge-ami-9-fips")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -920,7 +998,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-ami-9-fips:
-    needs: [pr-info, pre-edge-ami-9]
+    needs: [pr-info, pre-edge-ami-9-fips]
     runs-on: [kite, x86_64, rhos-0x, rhel-9-4, large]
     timeout-minutes: 130
     env:
@@ -931,7 +1009,7 @@ jobs:
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-ami-9" '.jobs | map(select(.name == "edge-ami-9")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-ami-9-fips" '.jobs | map(select(.name == "edge-ami-9-fips")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1002,6 +1080,31 @@ jobs:
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
+  pre-edge-minimal-raw-9:
+    needs: pr-info
+    runs-on: ubuntu-latest
+    env:
+      STATUS_NAME: Tests / edge-minimal-raw-9
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-minimal-raw-9" '.jobs | map(select(.name == "pre-edge-minimal-raw-9")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Runner has been deploying...'
+          target_url: '${{ steps.job-log-url.outputs.html_url }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
   edge-minimal-raw-9:
     needs: [pr-info, pre-edge-minimal-raw-9]
@@ -1191,8 +1294,34 @@ jobs:
   #           /tmp/artifacts/*.json
   #           /tmp/artifacts/*.log
 
+  pre-edge-vsphere-9-fips:
+    needs: pr-info
+    runs-on: ubuntu-latest
+    env:
+      STATUS_NAME: Tests / edge-vsphere-9-fips
+
+    steps:
+      - name: Get Current Job Log URL
+        id: job-log-url
+        run: |
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-vsphere-9-fips" '.jobs | map(select(.name == "pre-edge-vsphere-9-fips")) | .[0].html_url')
+          echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create in-progress status
+        uses: octokit/request-action@v2.x
+        with:
+          route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
+          context: ${{ env.STATUS_NAME }}
+          state: pending
+          description: 'RHEL 9.4 - Runner has been deploying...'
+          target_url: '${{ steps.job-log-url.outputs.html_url }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
   edge-vsphere-9-fips:
-    needs: [pr-info, pre-edge-vsphere-9]
+    needs: [pr-info, pre-edge-vsphere-9-fips]
     runs-on: [kite, x86_64, rhos-0x, rhel-9-4, medium]
     timeout-minutes: 180
     env:
@@ -1203,7 +1332,7 @@ jobs:
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-vsphere-9" '.jobs | map(select(.name == "edge-vsphere-9")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-vsphere-9-fips" '.jobs | map(select(.name == "edge-vsphere-9-fips")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
