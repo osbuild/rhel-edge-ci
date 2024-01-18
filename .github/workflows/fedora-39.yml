@@ -1,5 +1,5 @@
 ---
-name: RHEL for Edge test on Fedora 38
+name: RHEL for Edge test on Fedora 39
 
 on:
   # Triggered by osbuild-composer CI from gitlab
@@ -29,17 +29,17 @@ jobs:
       sender_repo: ${{ fromJson(steps.pr-api.outputs.data).head.repo.full_name }}
       sender_branch: ${{ fromJson(steps.pr-api.outputs.data).head.ref }}
 
-  pre-edge-commit-f38:
+  pre-edge-commit-f39:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-commit-f38
+      STATUS_NAME: Tests / edge-commit-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-commit-f38" '.jobs | map(select(.name == "pre-edge-commit-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-commit-f39" '.jobs | map(select(.name == "pre-edge-commit-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -50,24 +50,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Runner has been deploying...'
+          description: 'Fedora 39 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-commit-f38:
-    needs: [pr-info, pre-edge-commit-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, medium]
+  edge-commit-f39:
+    needs: [pr-info, pre-edge-commit-f39]
+    runs-on: [kite, x86_64, gcp, fedora-39, medium]
     timeout-minutes: 90
     env:
-      STATUS_NAME: Tests / edge-commit-f38
+      STATUS_NAME: Tests / edge-commit-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-commit-f38" '.jobs | map(select(.name == "edge-commit-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-commit-f39" '.jobs | map(select(.name == "edge-commit-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,7 +78,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Test has been running...'
+          description: 'Fedora 39 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -107,7 +107,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'Fedora 38 - Test got ${{ job.status }}'
+          description: 'Fedora 39 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -119,7 +119,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'Fedora 38 - Test got error'
+          description: 'Fedora 39 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -127,22 +127,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-commit-f38
+          name: edge-commit-f39
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-installer-f38:
+  pre-edge-installer-f39:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-installer-f38
+      STATUS_NAME: Tests / edge-installer-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-installer-f38" '.jobs | map(select(.name == "pre-edge-installer-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-installer-f39" '.jobs | map(select(.name == "pre-edge-installer-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -153,24 +153,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Runner has been deploying...'
+          description: 'Fedora 39 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-installer-f38:
-    needs: [pr-info, pre-edge-installer-f38]
-    runs-on: [kite, x86_64, rhos-0x, fedora-38, large]
+  edge-installer-f39:
+    needs: [pr-info, pre-edge-installer-f39]
+    runs-on: [kite, x86_64, rhos-0x, fedora-39, large]
     timeout-minutes: 130
     env:
-      STATUS_NAME: Tests / edge-installer-f38
+      STATUS_NAME: Tests / edge-installer-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-installer-f38" '.jobs | map(select(.name == "edge-installer-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-installer-f39" '.jobs | map(select(.name == "edge-installer-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -181,7 +181,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Test has been running...'
+          description: 'Fedora 39 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -213,7 +213,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'Fedora 38 - Test got ${{ job.status }}'
+          description: 'Fedora 39 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -225,7 +225,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'Fedora 38 - Test got error'
+          description: 'Fedora 39 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -233,22 +233,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-installer-f38
+          name: edge-installer-f39
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-raw-f38:
+  pre-edge-raw-f39:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-raw-f38
+      STATUS_NAME: Tests / edge-raw-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-raw-f38" '.jobs | map(select(.name == "pre-edge-raw-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-raw-f39" '.jobs | map(select(.name == "pre-edge-raw-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -259,24 +259,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Runner has been deploying...'
+          description: 'Fedora 39 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-raw-f38:
-    needs: [pr-info, pre-edge-raw-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, medium]
+  edge-raw-f39:
+    needs: [pr-info, pre-edge-raw-f39]
+    runs-on: [kite, x86_64, gcp, fedora-39, medium]
     timeout-minutes: 130
     env:
-      STATUS_NAME: Tests / edge-raw-f38
+      STATUS_NAME: Tests / edge-raw-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-raw-f38" '.jobs | map(select(.name == "edge-raw-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-raw-f39" '.jobs | map(select(.name == "edge-raw-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -287,7 +287,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Test has been running...'
+          description: 'Fedora 39 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -318,7 +318,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'Fedora 38 - Test got ${{ job.status }}'
+          description: 'Fedora 39 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -330,7 +330,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'Fedora 38 - Test got error'
+          description: 'Fedora 39 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -338,22 +338,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-raw-f38
+          name: edge-raw-f39
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-minimal-raw-f38:
+  pre-edge-minimal-raw-f39:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-minimal-raw-f38
+      STATUS_NAME: Tests / edge-minimal-raw-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-minimal-raw-f38" '.jobs | map(select(.name == "pre-edge-minimal-raw-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-minimal-raw-f39" '.jobs | map(select(.name == "pre-edge-minimal-raw-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -364,24 +364,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Runner has been deploying...'
+          description: 'Fedora 39 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-minimal-raw-f38:
-    needs: [pr-info, pre-edge-minimal-raw-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, medium]
+  edge-minimal-raw-f39:
+    needs: [pr-info, pre-edge-minimal-raw-f39]
+    runs-on: [kite, x86_64, gcp, fedora-39, medium]
     timeout-minutes: 100
     env:
-      STATUS_NAME: Tests / edge-minimal-raw-f38
+      STATUS_NAME: Tests / edge-minimal-raw-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-minimal-raw-f38" '.jobs | map(select(.name == "edge-minimal-raw-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-minimal-raw-f39" '.jobs | map(select(.name == "edge-minimal-raw-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -392,7 +392,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Test has been running...'
+          description: 'Fedora 39 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -423,7 +423,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'Fedora 38 - Test got ${{ job.status }}'
+          description: 'Fedora 39 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -435,7 +435,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'Fedora 38 - Test got error'
+          description: 'Fedora 39 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -443,22 +443,22 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-minimal-raw-f38
+          name: edge-minimal-raw-f39
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
 
-  pre-edge-qcow2-f38:
+  pre-edge-qcow2-f39:
     needs: pr-info
     runs-on: ubuntu-latest
     env:
-      STATUS_NAME: Tests / edge-qcow2-f38
+      STATUS_NAME: Tests / edge-qcow2-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-qcow2-f38" '.jobs | map(select(.name == "pre-edge-qcow2-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "pre-edge-qcow2-f39" '.jobs | map(select(.name == "pre-edge-qcow2-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -469,24 +469,24 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Runner has been deploying...'
+          description: 'Fedora 39 - Runner has been deploying...'
           target_url: '${{ steps.job-log-url.outputs.html_url }}'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-  edge-qcow2-f38:
-    needs: [pr-info, pre-edge-qcow2-f38]
-    runs-on: [kite, x86_64, gcp, fedora-38, medium]
+  edge-qcow2-f39:
+    needs: [pr-info, pre-edge-qcow2-f39]
+    runs-on: [kite, x86_64, gcp, fedora-39, medium]
     timeout-minutes: 100
     env:
-      STATUS_NAME: Tests / edge-qcow2-f38
+      STATUS_NAME: Tests / edge-qcow2-f39
 
     steps:
       - name: Get Current Job Log URL
         id: job-log-url
         run: |
           sudo dnf install -y jq
-          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-qcow2-f38" '.jobs | map(select(.name == "edge-qcow2-f38")) | .[0].html_url')
+          JOB_HTML_URL=$(curl --get -Ss -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/osbuild/rhel-edge-ci/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=30" | jq -r --arg job_name "edge-qcow2-f39" '.jobs | map(select(.name == "edge-qcow2-f39")) | .[0].html_url')
           echo "html_url=$JOB_HTML_URL" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -497,7 +497,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: pending
-          description: 'Fedora 38 - Test has been running...'
+          description: 'Fedora 39 - Test has been running...'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -528,7 +528,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: ${{ job.status }}
-          description: 'Fedora 38 - Test got ${{ job.status }}'
+          description: 'Fedora 39 - Test got ${{ job.status }}'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -540,7 +540,7 @@ jobs:
           route: 'POST /repos/osbuild/osbuild-composer/statuses/${{ needs.pr-info.outputs.sha }}'
           context: ${{ env.STATUS_NAME }}
           state: error
-          description: 'Fedora 38 - Test got error'
+          description: 'Fedora 39 - Test got error'
           target_url: ${{ steps.job-log-url.outputs.html_url }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
@@ -548,7 +548,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: edge-qcow2-f38
+          name: edge-qcow2-f39
           path: |
             /tmp/artifacts/*.json
             /tmp/artifacts/*.log
