@@ -2,18 +2,17 @@
 name: RHEL for Edge test on Fedora 39
 
 on:
-  # Triggered by osbuild-composer CI from gitlab
   repository_dispatch:
-    types: [osbuild-composer-ci]
+    types: [trigger-workflow]
 
 jobs:
   pr-info:
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR number from string PR-xxxx
+      - name: Get PR number from trigger event
         id: pr-num
         run: |
-          PR_NUM=$(echo "${{ github.event.client_payload.pr_number }}" | cut -d'-' -f 2)
+          PR_NUM=$(echo "${{ github.event.client_payload.pr_number }}")
           echo "pr_number=$PR_NUM" >> $GITHUB_OUTPUT
 
       - name: Get information for osbuild-composer pull request
