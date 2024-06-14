@@ -1,9 +1,10 @@
+---
 name: RHEL for Edge test on CS9
 
 on:
   # Triggered by osbuild-composer CI from gitlab
-  repository_dispatch:
-    types: [osbuild-composer-ci]
+  # repository_dispatch:
+  #   types: [osbuild-composer-ci]
 
 jobs:
   pr-info:

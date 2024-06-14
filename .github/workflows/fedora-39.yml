@@ -3,8 +3,8 @@ name: RHEL for Edge test on Fedora 39
 
 on:
   # Triggered by osbuild-composer CI from gitlab
-  repository_dispatch:
-    types: [osbuild-composer-ci]
+  # repository_dispatch:
+  #   types: [osbuild-composer-ci]
 
 jobs:
   pr-info:
