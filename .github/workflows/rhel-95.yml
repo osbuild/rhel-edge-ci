@@ -41,11 +41,11 @@ jobs:
         uses: sclorg/testing-farm-as-github-action@v2
         with:
           compose: RHEL-9.5.0-Nightly
-          arch: x86_64
+          arch: ${{ needs.pr-info.outputs.sha111 }}
           api_key: ${{ secrets.TF_API_KEY }}
           git_url: ${{ needs.pr-info.outputs.repo_url }}
           git_ref: ${{ needs.pr-info.outputs.ref }}
-          github_token: ${{ needs.pr-info.outputs.sha111 }}
+          github_token: ${{ secrets.PAT }}
           update_pull_request_status: true
           tmt_context: "arch=x86_64;distro=rhel-9-5"
           pull_request_status_name: "edge-rhel-9.5"
