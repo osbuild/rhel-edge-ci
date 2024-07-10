@@ -51,4 +51,4 @@ jobs:
           tmt_plan_regex: edge
           tf_scope: private
           secrets: "DOWNLOAD_NODE=${{ secrets.DOWNLOAD_NODE }};V2_QUAY_PASSWORD=${{ secrets.V2_QUAY_PASSWORD }};V2_QUAY_USERNAME=${{ secrets.V2_QUAY_USERNAME }};AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }};AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }};GOVC_URL=${{ secrets.GOVC_URL }};GOVC_USERNAME=${{ secrets.GOVC_USERNAME }};GOVC_PASSWORD=${{ secrets.GOVC_PASSWORD }}"
-          variables: "ARCH=x86_64;AWS_DEFAULT_REGION=us-east-1;GOVC_INSECURE=1;EDGE_USER_PASSWORD=foobar;CI=true;GIT_COMMIT=${{ env.commit_number }}"
+          variables: "ARCH=x86_64;AWS_DEFAULT_REGION=us-east-1;GOVC_INSECURE=1;EDGE_USER_PASSWORD=foobar;CI=true;GIT_COMMIT=12345"
