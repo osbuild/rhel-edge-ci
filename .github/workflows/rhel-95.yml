@@ -32,8 +32,8 @@ jobs:
   edge-rhel-95:
     needs: pr-info
     runs-on: ubuntu-latest
-    env:
-      commit_number: ${{ needs.pr-info.outputs.sha }}
+    # env:
+    #   commit_number: ${{ needs.pr-info.outputs.sha }}
 
     steps:
       - name: Run the tests
