@@ -39,7 +39,7 @@ jobs:
         with:
           compose: RHEL-9.5.0-Nightly
           arch: x86_64
-          api_key: ${{ secrets.TF_API_KEY }}
+          #api_key: ${{ secrets.TF_API_KEY }}
           #git_url: ${{ needs.pr-info.outputs.repo_url }}
           #git_ref: ${{ needs.pr-info.outputs.ref }}
           github_token: ${{ secrets.PAT }}
