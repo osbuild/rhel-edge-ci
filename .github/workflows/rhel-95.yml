@@ -26,7 +26,6 @@ jobs:
 
     outputs:
       sha: ${{ fromJson(steps.pr-api.outputs.data).head.sha }}
-      sha: ${{ fromJson(steps.pr-api.outputs.data).head.sha }}
       ref: ${{ fromJson(steps.pr-api.outputs.data).head.ref }}
       repo_url: ${{ fromJson(steps.pr-api.outputs.data).head.repo.html_url }}
 
