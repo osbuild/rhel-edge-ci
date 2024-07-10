@@ -40,8 +40,8 @@ jobs:
           compose: RHEL-9.5.0-Nightly
           arch: x86_64
           api_key: ${{ secrets.TF_API_KEY }}
-          git_url: ${{ needs.pr-info.outputs.sender_url }}
-          git_ref: ${{ needs.pr-info.outputs.sender_branch }}
+          git_url: ${{ needs.pr-info.outputs.repo_url }}
+          git_ref: ${{ needs.pr-info.outputs.ref }}
           github_token: ${{ secrets.PAT }}
           update_pull_request_status: true
           tmt_context: "arch=x86_64;distro=rhel-9-5"
