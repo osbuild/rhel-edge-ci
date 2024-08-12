@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Run the tests
-        uses: jamacku/testing-farm-as-github-action@support-nonpr-context
+        uses: sclorg/testing-farm-as-github-action@main
         with:
           compose: RHEL-9.5.0-Nightly
           arch: x86_64
