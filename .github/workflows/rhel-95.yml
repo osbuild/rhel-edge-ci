@@ -1,9 +1,9 @@
 ---
 name: RHEL for Edge test on RHEL 9
 
-on:
-  repository_dispatch:
-    types: [osbuild-composer-ci]
+# on:
+#   repository_dispatch:
+#     types: [osbuild-composer-ci]
 
 jobs:
   pr-info:
