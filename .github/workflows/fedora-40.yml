@@ -1,5 +1,5 @@
 ---
-name: RHEL for Edge test on CS 9
+name: RHEL for Edge test on Fedora 40
 
 on:
   repository_dispatch:
@@ -29,7 +29,7 @@ jobs:
       repo_url: ${{ fromJson(steps.pr-api.outputs.data).head.repo.html_url }}
       pr_number: ${{ steps.pr-num.outputs.pr_number }}
 
-  edge-cs-9:
+  edge-fedora-40:
     needs: pr-info
     runs-on: ubuntu-latest
 
@@ -37,7 +37,7 @@ jobs:
       - name: Run the tests
         uses: sclorg/testing-farm-as-github-action@main
         with:
-          compose: CentOS-Stream-9
+          compose: Fedora-40
           arch: x86_64
           api_key: ${{ secrets.TF_API_KEY }}
           git_url: ${{ needs.pr-info.outputs.repo_url }}
@@ -48,8 +48,8 @@ jobs:
           pr_number: ${{ needs.pr-info.outputs.pr_number }}
           commit_sha: ${{ needs.pr-info.outputs.sha }}
           update_pull_request_status: true
-          tmt_context: "arch=x86_64;distro=cs-9"
-          pull_request_status_name: "edge-cs-9-x86"
+          tmt_context: "arch=x86_64;distro=fedora"
+          pull_request_status_name: "edge-fedora-40"
           tmt_plan_regex: edge-x86
           tf_scope: private
           secrets: "DOWNLOAD_NODE=${{ secrets.DOWNLOAD_NODE }};V2_QUAY_USERNAME=${{ secrets.V2_QUAY_USERNAME }};V2_QUAY_PASSWORD=${{ secrets.V2_QUAY_PASSWORD }};AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }};AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }};GOVC_URL=${{ secrets.GOVC_URL }};GOVC_USERNAME=${{ secrets.GOVC_USERNAME }};GOVC_PASSWORD=${{ secrets.GOVC_PASSWORD }}"
